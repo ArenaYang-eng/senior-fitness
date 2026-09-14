@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+<title>銀髮族健身計畫</title>
+<style>
+  :root{
+    --bg:#FBF8F1;
+    --surface:#FFFFFF;
+    --surface-alt:#F1EAD9;
+    --primary:#2F4C39;
+    --primary-dark:#1E3327;
+    --primary-tint:#DDE7DC;
+    --accent:#E8A33D;
+    --accent-dark:#C97F1D;
+    --caution:#C1533B;
+    --caution-tint:#F6DFD8;
+    --success:#4C7A52;
+    --success-tint:#DEEBDE;
+    --text:#24301F;
+    --text-muted:#5B6653;
+    --border:#E3D9C2;
+    --radius-lg:22px;
+    --radius-md:14px;
+    --radius-sm:10px;
+    --shadow: 0 4px 14px rgba(31,45,30,0.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,Arial,sans-serif;
+    font-size:18px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:96px;
+  }
+  .numeral{font-family:Georgia,'Noto Serif TC',serif;}
+  h1,h2,h3,h4{font-family:inherit; margin:0 0 .4em 0; color:var(--primary-dark);}
+  h1{font-size:26px; font-weight:900;}
+  h2{font-size:22px; font-weight:700;}
+  h3{font-size:19px; font-weight:700;}
+  p{margin:.3em 0;}
+  button{font-family:inherit; cursor:pointer;}
+  a{color:inherit;}
+  :focus-visible{outline:3px solid var(--accent-dark); outline-offset:2px;}
+
+  header.top{
+    background:var(--primary);
+    color:#fff;
+    padding:22px 20px 26px;
+    border-radius:0 0 26px 26px;
+    box-shadow:var(--shadow);
+  }
+  header.top .eyebrow{font-size:15px; opacity:.85; margin-bottom:4px;}
+  header.top h1{color:#fff; font-size:24px;}
+  header.top .date{font-size:15px; opacity:.9; margin-top:6px;}
+
+  main{max-width:640px; margin:0 auto; padding:18px 16px 20px;}
+  .screen{display:none;}
+  .screen.active{display:block;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:20px;
+    margin-bottom:16px;
+    box-shadow:var(--shadow);
+  }
+  .card.tint-primary{background:var(--primary-tint); border-color:transparent;}
+  .card.tint-accent{background:#FBEBD3; border-color:transparent;}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    min-height:56px;
+    padding:12px 22px;
+    border-radius:16px;
+    border:none;
+    font-size:18px;
+    font-weight:700;
+    width:100%;
+  }
+  .btn-primary{background:var(--accent); color:var(--primary-dark);}
+  .btn-primary:hover{background:var(--accent-dark); color:#fff;}
+  .btn-outline{background:transparent; border:2px solid var(--primary); color:var(--primary);}
+  .btn-outline:hover{background:var(--primary); color:#fff;}
+  .btn-ghost{background:var(--primary-tint); color:var(--primary-dark);}
+  .btn-row{display:flex; gap:10px;}
+  .btn-row .btn{flex:1;}
+
+  .pill{
+    display:inline-block; padding:5px 14px; border-radius:999px;
+    font-size:14px; font-weight:700; background:var(--primary-tint); color:var(--primary-dark);
+  }
+  .pill.caution{background:var(--caution-tint); color:var(--caution);}
+  .pill.success{background:var(--success-tint); color:var(--success);}
+
+  .tip-box{
+    background:var(--success-tint);
+    border-left:5px solid var(--success);
+    border-radius:var(--radius-sm);
+    padding:12px 14px;
+    font-size:16px;
+    margin-top:10px;
+  }
+  .tip-box b{color:var(--success);}
+  .safety-box{
+    background:var(--caution-tint);
+    border-left:5px solid var(--caution);
+    border-radius:var(--radius-sm);
+    padding:12px 14px;
+    font-size:16px;
+    margin-top:8px;
+  }
+  .safety-box b{color:var(--caution);}
+  .danger-box{
+    background:var(--caution-tint);
+    border:2px solid var(--caution);
+    border-radius:var(--radius-md);
+    padding:16px;
+    margin-bottom:16px;
+  }
+  .danger-box h3{color:var(--caution); margin-bottom:8px;}
+  .danger-box ul{margin:6px 0 0; padding-left:20px;}
+  .danger-box li{margin-bottom:4px;}
+
+  .principle-card{background:var(--primary-tint); border-radius:var(--radius-md); padding:16px; margin-bottom:16px;}
+  .principle-chain{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:8px; font-weight:700; color:var(--primary-dark);}
+  .principle-chain span.step{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:6px 12px; font-size:15px;}
+  .principle-chain span.arrow{color:var(--accent-dark); font-size:16px;}
+
+  /* Home: program tracker + stats */
+  .tracker-card{margin-bottom:16px;}
+  .tracker-row{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;}
+  .tracker-row .big{font-family:Georgia,'Noto Serif TC',serif; font-size:30px; color:var(--primary-dark); font-weight:700;}
+  .set-date-row{display:flex; gap:8px; align-items:center; margin-top:8px;}
+  .set-date-row input{flex:1; padding:10px 12px; font-size:16px; border:2px solid var(--border); border-radius:10px;}
+  .set-date-row button{white-space:nowrap;}
+  .sync-note{background:#FEF6E9; border-left:5px solid var(--accent-dark); border-radius:var(--radius-sm); padding:10px 12px; margin-top:10px; font-size:15px;}
+
+  .bar-track{height:14px; background:var(--surface-alt); border-radius:999px; overflow:hidden; margin-top:8px;}
+  .bar-fill{height:100%; background:var(--accent); border-radius:999px; transition:width .3s;}
+  .bar-label{font-size:15px; color:var(--text-muted); margin-top:6px;}
+
+  table.roletable{width:100%; border-collapse:collapse; font-size:15px; margin:10px 0 4px;}
+  table.roletable th, table.roletable td{padding:9px 6px; border-bottom:1px solid var(--border); text-align:left;}
+  table.roletable th{color:var(--text-muted); font-weight:700; font-size:13px;}
+
+  .app-footer{max-width:640px; margin:6px auto 100px; padding:0 20px; color:var(--text-muted); font-size:13px; line-height:1.6;}
+
+  .storage-warning{
+    display:none; background:var(--caution); color:#fff; text-align:center;
+    font-size:14px; font-weight:700; padding:8px 14px;
+  }
+
+  .suggest-card{margin-bottom:16px;}
+  .suggest-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .suggest-level{font-family:Georgia,'Noto Serif TC',serif; font-size:26px; font-weight:700; color:var(--primary-dark);}
+  .source-note{font-size:14px; color:var(--text-muted); margin-top:2px;}
+
+  .week-nav{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px;}
+  .week-nav button{background:var(--surface); border:2px solid var(--border); border-radius:12px; padding:8px 14px; font-weight:700; color:var(--primary-dark); min-height:44px;}
+  .week-nav .label{font-weight:700; color:var(--primary-dark); font-size:16px;}
+
+  .log-details{margin-top:10px; border:1px solid var(--border); border-radius:12px; overflow:hidden;}
+  .log-details summary{
+    list-style:none; cursor:pointer; padding:12px 14px; font-weight:700; font-size:15px;
+    background:var(--surface-alt); color:var(--primary-dark); display:flex; align-items:center; gap:8px;
+  }
+  .log-details summary::-webkit-details-marker{display:none;}
+  .log-details summary::before{content:'▸'; color:var(--accent-dark);}
+  .log-details[open] summary::before{content:'▾';}
+  .log-details .log-body{padding:14px; background:#fff;}
+  .log-details.done summary{background:var(--success-tint); color:var(--success);}
+
+  /* Home */
+  .today-card{
+    background:linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color:#fff;
+    border-radius:var(--radius-lg);
+    padding:22px;
+    margin-bottom:16px;
+  }
+  .today-card .label{font-size:15px; opacity:.85;}
+  .today-card h2{color:#fff; font-size:23px; margin:4px 0 10px;}
+  .today-card .meta{font-size:16px; opacity:.95; margin-bottom:14px;}
+  .quick-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .quick-tile{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md);
+    padding:16px; text-align:center; font-weight:700; color:var(--primary-dark);
+  }
+  .quick-tile .icon{font-size:28px; display:block; margin-bottom:6px;}
+
+  /* level selector */
+  .level-tabs{display:flex; gap:8px; margin-bottom:16px;}
+  .level-tab{
+    flex:1; padding:12px 6px; text-align:center; border-radius:14px;
+    border:2px solid var(--border); background:var(--surface); font-weight:700; font-size:16px; color:var(--text-muted);
+  }
+  .level-tab.active{border-color:var(--primary); background:var(--primary); color:#fff;}
+
+  /* week grid */
+  .day-card{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:14px; border:1px solid var(--border); border-radius:var(--radius-md); margin-bottom:10px; background:var(--surface);
+  }
+  .day-card.today{border-color:var(--accent); background:#FEF6E9;}
+  .day-badge{
+    min-width:60px; text-align:center; font-weight:900; font-size:15px; color:var(--primary-dark);
+    background:var(--primary-tint); border-radius:10px; padding:8px 4px; line-height:1.4;
+  }
+  .day-card.rest .day-badge{background:var(--surface-alt); color:var(--text-muted);}
+  .day-content h3{margin-bottom:2px; font-size:18px;}
+  .day-content .sub{color:var(--text-muted); font-size:15px;}
+  .check-row{display:flex; align-items:center; gap:8px; margin-top:8px;}
+  .check-row input[type=checkbox]{width:26px; height:26px;}
+  .check-row label{font-size:16px; font-weight:700; color:var(--success);}
+
+  /* phase timeline */
+  .phase-card{border-left:6px solid var(--primary); padding-left:16px; margin-bottom:20px;}
+  .phase-card .num{font-family:Georgia,'Noto Serif TC',serif; font-size:38px; color:var(--accent-dark); font-weight:700; line-height:1;}
+  .phase-card .months{color:var(--text-muted); font-size:15px; margin-bottom:6px;}
+  .phase-goal{margin:8px 0;}
+  .phase-list{margin:6px 0 0; padding-left:20px;}
+  .phase-list li{margin-bottom:4px;}
+
+  /* guide */
+  .equip-card{margin-bottom:14px;}
+  .video-section{margin-top:12px;}
+  .video-section h4{font-size:15px; color:var(--primary-dark); margin:0 0 8px;}
+  .video-list{display:flex; flex-direction:column; gap:10px;}
+  .video-card{
+    display:flex; gap:12px; align-items:center; text-decoration:none; color:inherit;
+    background:var(--surface-alt); border-radius:12px; padding:8px; min-height:64px;
+  }
+  .video-card:active{opacity:.85;}
+  .video-thumb{position:relative; width:96px; height:72px; flex-shrink:0; border-radius:8px; overflow:hidden; background:#000;}
+  .video-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+  .video-thumb .play{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:22px; text-shadow:0 1px 4px rgba(0,0,0,.6);
+  }
+  .video-info{flex:1; min-width:0;}
+  .video-info .vt{font-weight:700; font-size:15px; color:var(--primary-dark); line-height:1.35;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+  .video-info .vc{font-size:13px; color:var(--text-muted); margin-top:3px;}
+  .video-note{font-size:13px; color:var(--text-muted); margin-top:8px;}
+  .equip-head{display:flex; align-items:center; gap:12px; margin-bottom:6px;}
+  .equip-head .icon{font-size:32px;}
+  .equip-head .cat{font-size:14px; color:var(--text-muted);}
+  .level-block{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 12px; border-radius:12px; background:var(--surface-alt); margin-top:8px; font-size:16px;
+  }
+  .level-block b{color:var(--primary-dark);}
+
+  /* assessment */
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-weight:700; margin-bottom:6px; font-size:16px;}
+  .field input[type=text], .field input[type=date], .field input[type=number], .field textarea, .field select{
+    width:100%; padding:12px 14px; font-size:17px; border:2px solid var(--border); border-radius:12px; font-family:inherit; background:#fff;
+  }
+  .field .hint{font-size:14px; color:var(--text-muted); margin-top:4px;}
+  .check-grid{display:flex; flex-wrap:wrap; gap:8px;}
+  .check-chip{display:flex; align-items:center; gap:6px; background:var(--surface-alt); padding:8px 12px; border-radius:20px; font-size:15px;}
+  .check-chip input{width:20px; height:20px;}
+
+  table.compare{width:100%; border-collapse:collapse; font-size:15px; margin-top:10px;}
+  table.compare th, table.compare td{padding:8px 6px; border-bottom:1px solid var(--border); text-align:center;}
+  table.compare th{color:var(--text-muted); font-weight:700; font-size:13px;}
+  .delta-up{color:var(--success); font-weight:700;}
+  .delta-down{color:var(--caution); font-weight:700;}
+
+  .history-item{padding:10px 0; border-bottom:1px solid var(--border);}
+  .history-item:last-child{border-bottom:none;}
+  .history-item .d{font-weight:700;}
+
+  /* bottom nav */
+  nav.bottom{
+    position:fixed; bottom:0; left:0; right:0;
+    background:var(--surface);
+    border-top:1px solid var(--border);
+    display:flex;
+    box-shadow:0 -4px 14px rgba(31,45,30,0.08);
+    z-index:10;
+  }
+  nav.bottom button{
+    flex:1; background:none; border:none; padding:9px 2px 11px;
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    color:var(--text-muted); font-size:11px; font-weight:700;
+  }
+  nav.bottom button .ic{font-size:22px;}
+  nav.bottom button.active{color:var(--primary);}
+  nav.bottom button.active .ic{transform:scale(1.08);}
+
+  .empty-note{color:var(--text-muted); font-size:15px; text-align:center; padding:20px 10px;}
+  .save-toast{
+    position:fixed; bottom:90px; left:50%; transform:translateX(-50%);
+    background:var(--primary-dark); color:#fff; padding:10px 20px; border-radius:20px;
+    font-size:15px; font-weight:700; opacity:0; transition:opacity .3s; pointer-events:none; z-index:20;
+  }
+  .save-toast.show{opacity:1;}
+
+  @media (max-width:380px){
+    body{font-size:17px;}
+    h1{font-size:22px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="eyebrow">社區健身房 · 銀髮族專屬</div>
+  <h1>12個月安心健身計畫</h1>
+  <div class="date" id="todayDateLabel"></div>
+</header>
+<div class="storage-warning" id="storageWarning">⚠️ 資料儲存失敗，這次的修改可能不會保留，請確認瀏覽器設定或換一台裝置再試</div>
+
+<main>
+
+  <!-- HOME -->
+  <section class="screen active" id="screen-home">
+    <div class="today-card">
+      <div class="label">今天是<span id="todayWeekdayLabel"></span></div>
+      <h2 id="todayTitle">今天的運動</h2>
+      <div class="meta" id="todayMeta"></div>
+      <button class="btn btn-primary" onclick="goTo('week')">查看今天怎麼做</button>
+    </div>
+
+    <div class="card tracker-card" id="trackerCard"></div>
+
+    <div class="card suggest-card" id="suggestCard"></div>
+
+    <div class="card">
+      <h2>本週完成度</h2>
+      <div class="bar-track"><div class="bar-fill" id="weekBarFill"></div></div>
+      <div class="bar-label" id="weekBarLabel"></div>
+    </div>
+
+    <div class="card">
+      <h2>目前程度</h2>
+      <p class="sub" style="color:var(--text-muted)">依照您的體能狀況選擇，隨時可以調整</p>
+      <div class="level-tabs" id="homeLevelTabs"></div>
+      <div class="tip-box"><b>小提醒：</b><span id="levelHint"></span></div>
+    </div>
+
+    <h2 style="margin:18px 4px 10px;">快速功能</h2>
+    <div class="quick-grid">
+      <button class="quick-tile" onclick="goTo('assess')"><span class="icon">📋</span>體能測評</button>
+      <button class="quick-tile" onclick="goTo('plan')"><span class="icon">🗓️</span>12個月計畫</button>
+      <button class="quick-tile" onclick="goTo('week')"><span class="icon">💪</span>本週課表</button>
+      <button class="quick-tile" onclick="goTo('guide')"><span class="icon">🏋️</span>器材動作指南</button>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3>使用前必讀</h3>
+      <ul style="padding-left:20px; margin:8px 0 0;">
+        <li>開始前請先完成「體能測評」，並確認醫師同意運動。</li>
+        <li>運動中若感到胸悶、頭暈或不適，請立即停止並休息，詳見「安全守則」。</li>
+        <li>每次運動前後別忘了 5 分鐘暖身與收操伸展。</li>
+      </ul>
+      <button class="btn btn-outline" style="margin-top:12px;" onclick="goTo('safety')">查看完整安全守則</button>
+    </div>
+  </section>
+
+  <!-- ASSESSMENT -->
+  <section class="screen" id="screen-assess">
+    <h2>體能測評表</h2>
+    <p style="color:var(--text-muted)">建議在第 0、3、6、9、12 個月各測一次，就能清楚看到進步。</p>
+
+    <div class="card">
+      <h3>新增一次測評</h3>
+      <div class="field">
+        <label for="a-type">測評類型</label>
+        <select id="a-type">
+          <option value="baseline">前測（開始前）</option>
+          <option value="checkin">期中測評</option>
+          <option value="final">後測（12個月後）</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="a-date">測評日期</label>
+        <input type="date" id="a-date">
+      </div>
+      <div class="field">
+        <label for="a-age">年齡</label>
+        <input type="number" id="a-age" placeholder="例如：72">
+      </div>
+      <div class="field">
+        <label>慢性病史（可複選）</label>
+        <div class="check-grid" id="conditionChips"></div>
+      </div>
+      <div class="field">
+        <label class="check-chip" style="width:fit-content;">
+          <input type="checkbox" id="a-approved"> 已獲醫師同意可運動
+        </label>
+      </div>
+
+      <h3 style="margin-top:18px;">四項功能性體適能測試</h3>
+
+      <div class="field">
+        <label for="t-stand">① 30秒坐站測試（次數）</label>
+        <input type="number" id="t-stand" placeholder="測下肢肌力，防肌少症">
+        <div class="hint">椅子上雙手抱胸，30秒內盡量多次完全站起再坐下，記錄次數。</div>
+      </div>
+      <div class="field">
+        <label for="t-tug">② 起立走測試 TUG（秒）</label>
+        <input type="number" id="t-tug" step="0.1" placeholder="測平衡與移動能力，防跌倒">
+        <div class="hint">從椅子起身，走3公尺、轉身走回並坐下，記錄總秒數（越短越好）。</div>
+      </div>
+      <div class="field">
+        <label for="t-balance">③ 單腳站立測試（秒，取較佳單腳）</label>
+        <input type="number" id="t-balance" placeholder="測平衡感，防跌倒">
+        <div class="hint">單腳站立，身旁務必有椅背或牆可扶，記錄能維持的秒數。</div>
+      </div>
+      <div class="field">
+        <label for="t-reach">④ 坐姿體前彎（公分）</label>
+        <input type="number" id="t-reach" step="0.1" placeholder="測柔軟度與活動度">
+        <div class="hint">坐姿雙腿伸直，身體前彎，記錄手指與腳尖的距離（正值代表超過腳尖）。</div>
+      </div>
+      <div class="field">
+        <label for="t-grip">⑤ 握力測試（公斤，選填）</label>
+        <input type="number" id="t-grip" step="0.1" placeholder="若社區配有握力器再填寫">
+        <div class="hint">測上肢肌力，若健身房無握力器可留空。</div>
+      </div>
+      <div class="field">
+        <label for="t-well">今天的整體精神狀態（0–10）</label>
+        <input type="range" id="t-well" min="0" max="10" value="5" oninput="wellOutVal.textContent=this.value">
+        <div class="hint">0 = 非常疲累不適，10 = 精神飽滿 　目前：<b id="wellOutVal">5</b></div>
+      </div>
+      <div class="field">
+        <label for="a-notes">備註</label>
+        <textarea id="a-notes" rows="2" placeholder="今天的身體狀況、疼痛部位等"></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="saveAssessment()">儲存這次測評</button>
+    </div>
+
+    <div class="card" id="compareCard" style="display:none;">
+      <h3>進步比較（第一次 vs 最新一次）</h3>
+      <table class="compare" id="compareTable"></table>
+      <div class="tip-box" style="margin-top:12px;">
+        <b>怎麼看這張表：</b>
+        <ul style="margin:6px 0 0; padding-left:20px;">
+          <li>肌力（坐站）進步 → 可評估增加阻力或組數</li>
+          <li>TUG 或單腳站立沒有改善 → 優先保留平衡與功能訓練，先不急著加進階器材</li>
+          <li>若近期疼痛或不適回報增加 → 降低強度或停止該項目，必要時尋求專業評估</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" id="painStatsCard" style="display:none;"></div>
+
+    <div class="card">
+      <h3>歷史紀錄</h3>
+      <div id="assessHistory"><p class="empty-note">尚未有測評紀錄</p></div>
+    </div>
+  </section>
+
+  <!-- PLAN OVERVIEW -->
+  <section class="screen" id="screen-plan">
+    <h2>12個月計畫總覽</h2>
+    <p style="color:var(--text-muted)">整個計畫分成三個階段，循序漸進，安全第一。</p>
+
+    <div class="principle-card">
+      <h3 style="margin-bottom:2px;">漸進原則：怎麼知道可以進階？</h3>
+      <p style="margin:0;">同一階段內，先照這個順序調整，不急著加重量：</p>
+      <div class="principle-chain">
+        <span class="step">① 動作品質</span><span class="arrow">→</span>
+        <span class="step">② 次數</span><span class="arrow">→</span>
+        <span class="step">③ 組數</span><span class="arrow">→</span>
+        <span class="step">④ 重量／時間</span>
+      </div>
+      <p style="margin-top:10px;">姿勢穩、不痛、能輕鬆聊天完成目標次數，才考慮進到下一步；任何一步做起來勉強，就先留在原地多練習幾次。</p>
+    </div>
+
+    <div id="phaseList"></div>
+
+    <div class="card tint-accent">
+      <h3>長期維持的簡單心法：3＋3＋天天動</h3>
+      <p>進入強化期後，用這個節奏維持一輩子：每週 <b>3 天</b>肌力訓練、每週 <b>3 天</b>心肺／活動，再加上<b>每天</b>維持日常走動與家事。每 3 個月重新測評一次，依結果微調課表即可，不必大幅更動整個計畫。</p>
+    </div>
+  </section>
+
+  <!-- WEEKLY SCHEDULE -->
+  <section class="screen" id="screen-week">
+    <h2>本週課表</h2>
+    <div class="level-tabs" id="weekLevelTabs"></div>
+    <div class="tip-box" style="margin-bottom:16px;"><b>本階段重點：</b><span id="weekLevelDesc"></span></div>
+    <div class="week-nav">
+      <button onclick="changeWeek(-1)">‹ 上一週</button>
+      <span class="label" id="weekNavLabel"></span>
+      <button onclick="changeWeek(1)">下一週 ›</button>
+    </div>
+    <div class="danger-box" id="painAlert" style="display:none;"></div>
+    <p style="color:var(--text-muted); font-size:15px;">點選每一天的欄位可展開，記錄完成情形、主觀用力程度（RPE）與是否有不適，也可以回頭補記前幾天。</p>
+    <div id="weekDays"></div>
+  </section>
+
+  <!-- EQUIPMENT GUIDE -->
+  <section class="screen" id="screen-guide">
+    <h2>器材動作指南</h2>
+    <p style="color:var(--text-muted)">點選您目前的程度，就能看到對應的時間與組數建議。每個器材下方也附上教學影片，第一次使用前可以先看過一遍。</p>
+    <p class="video-note">📺 影片皆連結至 YouTube 公開影片（非本社區拍攝），點擊會另開新分頁播放。內容僅供參考，實際器材操作方式仍以現場教練或管理員說明為準。</p>
+
+    <div class="card">
+      <h3>器材角色速覽</h3>
+      <table class="roletable">
+        <tr><th>器材</th><th>主要用途</th><th>銀髮定位</th></tr>
+        <tr><td>雙滑輪多功能訓練機</td><td>胸、背、肩、腿、核心阻力</td><td>肌力主力</td></tr>
+        <tr><td>跑步機</td><td>快走、坡度行走、心肺</td><td>負重步行核心</td></tr>
+        <tr><td>靠背式健身車</td><td>低衝擊心肺</td><td>腰背友善替代</td></tr>
+        <tr><td>橢圓機</td><td>零衝擊全身有氧</td><td>關節友善替代</td></tr>
+        <tr><td>啞鈴＋重訓椅</td><td>自由重量、農夫走路、登階</td><td>中高階，需指導</td></tr>
+        <tr><td>階梯機／飛輪車</td><td>較高負荷心肺與下肢</td><td>進階，須個別評估</td></tr>
+      </table>
+    </div>
+
+    <div class="level-tabs" id="guideLevelTabs"></div>
+    <div id="equipList"></div>
+    <div class="card tint-accent">
+      <h3>⚠️ 進階選配器材</h3>
+      <p><b>飛輪車：</b>坐墊較窄、姿勢前傾，門檻較高。建議體能極佳、無心血管疑慮的長輩，待高階階段再嘗試。</p>
+      <p><b>階梯機：</b>對膝關節壓力較大，需良好平衡感。建議關節健康、已有運動習慣者，全程緊握扶手、極慢速進行。</p>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section class="screen" id="screen-safety">
+    <h2>銀髮族安全守則</h2>
+
+    <div class="danger-box">
+      <h3>⛔ 出現以下狀況，立即停止運動</h3>
+      <ul>
+        <li>胸痛或胸悶</li>
+        <li>明顯呼吸困難</li>
+        <li>暈眩、快要昏倒的感覺</li>
+        <li>突發且嚴重的不適</li>
+      </ul>
+      <p style="margin-top:10px;">立即停止、就地休息，並依社區既定的緊急聯絡流程處理。若有慢性疾病、骨質疏鬆、近期受傷或醫療限制，應先經醫療／運動專業人員評估再調整課表。</p>
+    </div>
+
+    <div class="card">
+      <h3>重量與強度</h3>
+      <p>初期一律從最輕的重量開始，不追求「力竭」。能穩定、姿勢良好地完成目標次數，才逐步增加——順序請參考「12個月計畫」頁的漸進原則。</p>
+    </div>
+    <div class="card">
+      <h3>骨骼刺激</h3>
+      <p>預防骨鬆的核心是「阻力訓練」＋「安全的負重步行」（如跑步機快走）。橢圓機、健身車雖然對關節友善，但衝擊與負重刺激較低，不能完全取代阻力訓練的骨骼效果。</p>
+    </div>
+    <div class="card">
+      <h3>平衡與跌倒預防</h3>
+      <p>單腳站、跨步等平衡練習，務必在椅背、扶手或牆邊旁進行。平衡感較弱或曾經跌倒的長輩，不建議獨自嘗試階梯機、飛輪車等進階器材。</p>
+      <div class="video-section">
+        <h4>📺 教學影片</h4>
+        <div class="video-list">
+          <a class="video-card" href="https://www.youtube.com/watch?v=K84qprMH1Og" target="_blank" rel="noopener">
+            <div class="video-thumb">
+              <img src="https://img.youtube.com/vi/K84qprMH1Og/mqdefault.jpg" alt="年長者的平衡訓練" loading="lazy">
+              <span class="play">▶</span>
+            </div>
+            <div class="video-info">
+              <div class="vt">年長者的平衡訓練！三招增進平衡感</div>
+              <div class="vc">北木健身 · YouTube</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>器材選擇</h3>
+      <p>階梯機與飛輪車定位為進階器材：階梯機對膝關節與平衡要求較高，飛輪車對核心與腰背姿勢要求較高。兩者都建議先經過一段時間規律訓練、體能穩定後再由專人評估是否嘗試。</p>
+    </div>
+  </section>
+
+  <p class="app-footer">社區銀髮健身 Web App｜器材資訊依據「社區健身房器材功能與特色指南」；四項功能性測試為業界常用的銀髮族體適能評估項目，但自動分級門檻為產品原型，正式導入前請由合格運動或醫療專業人員依社區族群校準並審核。資料會儲存在您目前使用的裝置上，若跨裝置查看將看不到彼此的紀錄。</p>
+</main>
+
+<div class="save-toast" id="saveToast">已儲存 ✓</div>
+
+<nav class="bottom">
+  <button class="nav-btn active" data-screen="home" onclick="goTo('home')"><span class="ic">🏠</span>首頁</button>
+  <button class="nav-btn" data-screen="assess" onclick="goTo('assess')"><span class="ic">📋</span>測評</button>
+  <button class="nav-btn" data-screen="plan" onclick="goTo('plan')"><span class="ic">🗓️</span>總覽</button>
+  <button class="nav-btn" data-screen="week" onclick="goTo('week')"><span class="ic">💪</span>課表</button>
+  <button class="nav-btn" data-screen="guide" onclick="goTo('guide')"><span class="ic">🏋️</span>指南</button>
+  <button class="nav-btn" data-screen="safety" onclick="goTo('safety')"><span class="ic">⛑️</span>安全</button>
+</nav>
+
+<script>
+/* ---------------- DATA ---------------- */
+
+const LEVELS = [
+  {id:'beginner', label:'初階', months:'第1–3個月', target:3, desc:'先熟悉器材、建立習慣，強度低、次數少，休息要充分。動作品質比做多更重要。'},
+  {id:'intermediate', label:'中階', months:'第4–8個月', target:4, desc:'逐漸拉長時間、增加重量，開始加入啞鈴與功能性訓練，持續刺激骨密度與肌力。'},
+  {id:'advanced', label:'高階', months:'第9–12個月', target:4, desc:'全身循環訓練搭配較高強度，並視體能狀況嘗試進階器材，鞏固成果。'}
+];
+
+const PHASES = [
+  {
+    num:'01', name:'適應期', months:'第 1–3 個月', level:'初階',
+    goal:'安全熟悉器材、建立規律運動習慣、改善基礎平衡與心肺功能，零受傷是最高原則。',
+    freq:'每週 3 次（隔天進行，天天有休息日）',
+    focus:['橢圓機、靠背式健身車：低強度有氧', '雙滑輪多功能訓練機：學習正確動作', '每次運動後 5 分鐘伸展'],
+    milestone:'能連續走完 3 個月不中斷，30秒坐站測試比起點進步。'
+  },
+  {
+    num:'02', name:'進步期', months:'第 4–8 個月', level:'中階',
+    goal:'漸進增加阻力與運動時間，加入啞鈴基礎訓練，提升肌力並持續刺激骨密度。',
+    freq:'每週 3–4 次',
+    focus:['跑步機快走／爬坡、橢圓機：中等強度有氧', '雙滑輪機加重量 + 啞鈴基礎動作（建議教練指導）', '加入單腳站立等平衡練習'],
+    milestone:'起立走測試（TUG）秒數縮短，日常爬樓梯更輕鬆。'
+  },
+  {
+    num:'03', name:'強化期', months:'第 9–12 個月', level:'高階',
+    goal:'維持並強化肌力、心肺與平衡能力，鞏固防跌倒、防肌少症、防骨鬆的成果。',
+    freq:'每週 3–4 次，可視體能加入第 5 次輕量活動',
+    focus:['全身循環訓練（雙滑輪機＋啞鈴）', '中高強度有氧，視狀況嘗試階梯機／飛輪車', '每月自我檢視體適能測試'],
+    milestone:'完成 12 個月後測，四項體適能測試皆優於前測。'
+  }
+];
+
+// weekly schedule per level: array of 7 days (一~日)
+const WEEK = {
+  beginner:[
+    {day:'一', type:'cardio', title:'有氧：橢圓機', sub:'8–10 分鐘 ＋ 伸展 5 分鐘'},
+    {day:'二', type:'rest', title:'休息日', sub:'讓身體充分恢復'},
+    {day:'三', type:'strength', title:'肌力：雙滑輪多功能訓練機', sub:'3 個動作，各 1–2 組 × 10–12 下'},
+    {day:'四', type:'rest', title:'休息日', sub:'讓身體充分恢復'},
+    {day:'五', type:'cardio', title:'有氧：靠背式健身車', sub:'10 分鐘 ＋ 單腳站平衡練習 5 分鐘'},
+    {day:'六', type:'active', title:'輕鬆散步', sub:'戶外散步 20 分鐘，速度自在'},
+    {day:'日', type:'rest', title:'完全休息', sub:'好好休息，準備下一週'}
+  ],
+  intermediate:[
+    {day:'一', type:'cardio', title:'有氧：跑步機快走', sub:'12–15 分鐘'},
+    {day:'二', type:'strength', title:'肌力：雙滑輪機 ＋ 啞鈴', sub:'4 個動作，各 2–3 組 × 10–12 下'},
+    {day:'三', type:'rest', title:'休息日', sub:'讓身體充分恢復'},
+    {day:'四', type:'cardio', title:'有氧：橢圓機', sub:'15 分鐘 ＋ 平衡練習'},
+    {day:'五', type:'strength', title:'肌力：全身循環', sub:'雙滑輪機各部位，2–3 組'},
+    {day:'六', type:'active', title:'主動恢復', sub:'散步或伸展 30 分鐘'},
+    {day:'日', type:'rest', title:'完全休息', sub:'好好休息，準備下一週'}
+  ],
+  advanced:[
+    {day:'一', type:'cardio', title:'有氧：跑步機爬坡', sub:'18–22 分鐘，坡度 2–3%'},
+    {day:'二', type:'strength', title:'肌力：全身（雙滑輪機＋啞鈴）', sub:'5–6 個動作，各 3 組 × 12–15 下'},
+    {day:'三', type:'active', title:'平衡與柔軟度強化', sub:'單腳站、伸展，共 15 分鐘'},
+    {day:'四', type:'cardio', title:'有氧：橢圓機間歇', sub:'20 分鐘，快慢交替'},
+    {day:'五', type:'strength', title:'肌力：全身循環', sub:'雙滑輪機＋啞鈴，3 組'},
+    {day:'六', type:'active', title:'主動恢復', sub:'散步或伸展 30 分鐘'},
+    {day:'日', type:'rest', title:'完全休息', sub:'好好休息，準備下一週'}
+  ]
+};
+
+const EQUIPMENT = [
+  {
+    id:'treadmill', icon:'🏃', name:'跑步機（快走／爬坡）', cat:'有氧訓練',
+    desc:'模擬平地行走、快走、慢跑或爬坡，全面提升心肺耐力，並強化下肢肌群。',
+    tip:'極度推薦！雙腳踩踏的「負重」特性有助於維持骨質密度。建議從平地快走開始，熟練後可增加些微坡度以強化腿力。',
+    safety:'務必扣上安全夾；感覺不穩請先扶穩把手；配速以「還能正常說話」為原則，不要喘到說不出話。',
+    levels:{beginner:'5–8 分鐘，平地，速度放慢', intermediate:'12–15 分鐘，坡度 1–2%', advanced:'18–22 分鐘，坡度 2–3% 間歇'},
+    videos:[
+      {title:'安全使用跑步機全攻略，跟著做就對啦！', channel:'康健雜誌', id:'_mez_sRxME0'},
+      {title:'跑步機入門注意事項', channel:'i運動 isports', id:'Vf3TxicT50c'}
+    ]
+  },
+  {
+    id:'elliptical', icon:'🔄', name:'橢圓機／滑步機', cat:'有氧訓練 · 關節友善',
+    desc:'提供無衝擊的全身有氧運動，同時帶動上下半身（手臂推拉與雙腿踩踏）。',
+    tip:'關節友善首選！對膝蓋或髖關節已退化、無法承受跑步機衝擊的長輩，是最安全的有氧選擇。',
+    safety:'雙手務必扶穩把手；起步先由慢速開始，感覺穩定後再逐漸加快。',
+    levels:{beginner:'8–10 分鐘，慢速', intermediate:'15 分鐘，中速', advanced:'20 分鐘，可加入快慢間歇'},
+    videos:[
+      {title:'3招正確使用滑步機，燃脂安全又有效', channel:'康健雜誌', id:'eN6dFAnxVWM'}
+    ]
+  },
+  {
+    id:'recumbent', icon:'🚲', name:'靠背式健身車', cat:'有氧訓練 · 腰部友善',
+    desc:'寬大座椅與背部支撐，完全卸除腰椎與上半身壓力的下肢訓練。',
+    tip:'腰部力量不足或容易腰痠的長輩首選，乘坐極度舒適、身體重心低。',
+    safety:'調整好座椅前後距離，踩踏時膝蓋微彎即可，避免完全打直鎖死。',
+    levels:{beginner:'10 分鐘，輕阻力', intermediate:'15 分鐘，中阻力', advanced:'20 分鐘，可加入阻力間歇'},
+    videos:[
+      {title:'健身房設備教學｜斜臥式腳踏車', channel:'捷寶雲品', id:'8Gzs5X_W3zQ'}
+    ]
+  },
+  {
+    id:'cable', icon:'🔗', name:'雙滑輪多功能訓練機', cat:'肌力訓練 · 安全首選',
+    desc:'透過繩索與滑輪的拉引，可進行全身各部位（胸、背、肩、腿、核心）的阻力訓練，軌跡受控、阻力平穩。',
+    tip:'安全第一選擇！相較於啞鈴，滑輪機的軌跡更受控。可訓練長輩最需要的背部（防駝背）、胸部（推力）與核心穩定。',
+    safety:'每次都從最輕的插梢重量開始測試；動作放慢、確實控制，避免用甩的方式借力。',
+    levels:{beginner:'3 個動作（坐姿划船／胸推／下拉），各 1–2 組 × 10–12 下', intermediate:'4 個動作，各 2–3 組 × 10–12 下，重量中等', advanced:'5–6 個動作全身循環，各 3 組 × 12–15 下'},
+    videos:[
+      {title:'動作教學：滑輪坐姿划船（含高齡訓練建議）', channel:'前勁體能', id:'sJOEc7HP1FE'},
+      {title:'動作教學：滑輪下拉 Lat Pull Downs（入門）', channel:'前勁體能', id:'UEjioUYFARU'}
+    ]
+  },
+  {
+    id:'dumbbell', icon:'🏋️', name:'啞鈴組與可調式重訓椅', cat:'肌力訓練 · 需指導',
+    desc:'提供自由重量訓練，針對特定肌肉進行獨立或複合性鍛鍊，重訓椅可調整多種角度。中高階可加入「農夫走路」（雙手提啞鈴行走）與「登階」等功能性動作，貼近日常生活的提物、上下樓梯動作。',
+    tip:'拿著啞鈴做深蹲、農夫走路或登階，能給予骨骼極佳的壓力刺激以預防骨鬆，但需要自行控制身體平衡。',
+    safety:'強烈建議初學者在教練或有經驗者指導下，從最輕的重量開始學習正確發力，以免受傷。農夫走路請選平坦無障礙的路線。',
+    levels:{beginner:'暫不安排，建議先由教練評估動作', intermediate:'2 個動作（肩推／二頭彎舉），2 組 × 10 下，1–2 公斤', advanced:'3–4 個動作含農夫走路、登階，3 組 × 10–12 下，2–4 公斤'},
+    videos:[
+      {title:'年長者也能開始的啞鈴訓練｜從挑選重量到入門動作一次教你', channel:'Kopi', id:'ldTnHnS6EDQ'},
+      {title:'長者運動：簡易新手啞鈴訓練', channel:'GymBeginner', id:'HHv2OAeJMWs'}
+    ]
+  }
+];
+
+const CONDITIONS = ['高血壓','糖尿病','骨質疏鬆','關節炎','心臟疾病','其他'];
+
+/* ---------------- STATE ---------------- */
+let appData = { currentLevel:'beginner', assessments:[], sessionRecords:{}, startDate:null };
+let weekOffset = 0; // transient, not persisted: 0 = this week
+const WEEKDAY_MAP = ['日','一','二','三','四','五','六'];
+const STORAGE_KEY = 'app-data';
+
+function pad2(n){ return String(n).padStart(2,'0'); }
+function toLocalDateKey(d){ return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
+function todayKey(){ return toLocalDateKey(new Date()); }
+
+/* Storage: try window.storage first (persistent artifact storage);
+   fall back to localStorage so the app still works if window.storage
+   isn't available (e.g. opened as a plain file or on another host). */
+async function storageGet(){
+  if(window.storage){
+    try{
+      const res = await window.storage.get(STORAGE_KEY, false);
+      if(res && res.value) return res.value;
+      return null;
+    }catch(e){ /* fall through to localStorage */ }
+  }
+  try{ return localStorage.getItem('senior_fitness_'+STORAGE_KEY); }catch(e){ return null; }
+}
+async function storageSet(value){
+  let ok=false;
+  if(window.storage){
+    try{ await window.storage.set(STORAGE_KEY, value, false); ok=true; }catch(e){ /* fall through */ }
+  }
+  if(!ok){
+    try{ localStorage.setItem('senior_fitness_'+STORAGE_KEY, value); ok=true; }catch(e){ ok=false; }
+  }
+  return ok;
+}
+async function loadData(){
+  try{
+    const raw = await storageGet();
+    if(raw) appData = JSON.parse(raw);
+  }catch(e){ /* corrupted data, keep defaults */ }
+  if(!appData.currentLevel) appData.currentLevel='beginner';
+  if(!appData.assessments) appData.assessments=[];
+  if(!appData.sessionRecords) appData.sessionRecords={};
+  if(appData.startDate===undefined) appData.startDate=null;
+}
+async function saveData(){
+  const ok = await storageSet(JSON.stringify(appData));
+  const warn = document.getElementById('storageWarning');
+  if(ok){ showToast(); warn.style.display='none'; }
+  else{ warn.style.display='block'; }
+}
+function showToast(){
+  const t=document.getElementById('saveToast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1400);
+}
+
+/* ---------------- NAV ---------------- */
+function goTo(screen){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+screen).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.screen===screen));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ---------------- PROGRAM TRACKING HELPERS ---------------- */
+function computeProgramInfo(){
+  if(!appData.startDate) return null;
+  const start = new Date(appData.startDate+'T00:00:00');
+  const now = new Date();
+  const diffDays = Math.floor((now - start)/86400000);
+  if(diffDays < 0) return {future:true};
+  const week = Math.floor(diffDays/7)+1;
+  const month = Math.floor(diffDays/30)+1;
+  const phaseIdx = month<=3 ? 0 : (month<=8 ? 1 : 2);
+  return {week: Math.min(week,52), month: Math.min(month,12), phaseIdx};
+}
+function setStartDate(){
+  const v = document.getElementById('startDateInput').value;
+  if(!v){ alert('請選擇日期'); return; }
+  appData.startDate = v;
+  saveData();
+  renderHome();
+}
+function clearStartDate(){
+  appData.startDate = null;
+  saveData();
+  renderHome();
+}
+function applySuggestedLevel(levelId){
+  appData.currentLevel = levelId;
+  saveData();
+  renderAll();
+}
+
+/* Analyze the most recent assessment against three core functional tests.
+   Flexibility (reach) and grip are kept informational only — they do not
+   grant "free" points toward a level, since neither is a strong predictor
+   of fall or overload risk on its own. Thresholds are a starting product
+   prototype and should be calibrated by a rehab / fitness professional
+   against the actual member population before formal launch. */
+function analyzeAssessment(r){
+  const stand = parseFloat(r.tests.stand);
+  const tug = parseFloat(r.tests.tug);
+  const balance = parseFloat(r.tests.balance);
+  const standPass = !isNaN(stand) && stand>=12;
+  const tugPass = !isNaN(tug) && tug<=10;
+  const balancePass = !isNaN(balance) && balance>=10;
+  const passCount = [standPass,tugPass,balancePass].filter(Boolean).length;
+  let redFlag=false, flagMsg='';
+  if(r.approved===false){
+    redFlag=true; flagMsg='尚未確認已獲醫師／專業人員同意運動，請先取得同意，暫不建議提升訓練強度。';
+  }else if(!isNaN(balance) && balance<5){
+    redFlag=true; flagMsg='單腳站立不到 5 秒，跌倒風險較高，建議先加強平衡訓練並諮詢專業人員。';
+  }else if(!isNaN(tug) && tug>20){
+    redFlag=true; flagMsg='起立走測試（TUG）超過 20 秒，移動與平衡功能仍較弱，建議先加強基礎訓練再考慮升級。';
+  }
+  const idx = passCount>=3 ? 2 : passCount>=2 ? 1 : 0;
+  return {idx, passCount, redFlag, flagMsg};
+}
+
+/* Combine "elapsed time" (a ceiling — don't rush) with "latest assessment"
+   (the evidence — don't advance without demonstrated function). This fixes
+   the two separate flaws of auto-leveling by month alone (can suggest a
+   level the person hasn't earned) and by assessment score alone with no
+   pacing (can jump straight to advanced from one good test). */
+function getSuggestedLevel(){
+  const monthInfo = computeProgramInfo();
+  const monthCeilingIdx = (monthInfo && !monthInfo.future) ? monthInfo.phaseIdx : 2; // no start date = no time-based ceiling yet
+  const latest = appData.assessments[appData.assessments.length-1];
+  if(!latest){
+    return {idx:0, hasAssessment:false, reason:'尚未完成體能測評，建議先從初階開始，並儘快安排前測。'};
+  }
+  const a = analyzeAssessment(latest);
+  if(a.redFlag){
+    return {idx:0, hasAssessment:true, reason:a.flagMsg};
+  }
+  const idx = Math.min(a.idx, monthCeilingIdx);
+  let reason;
+  if(a.idx > monthCeilingIdx){
+    reason = `測評表現（${a.passCount}/3 項達標）已達更高等級，但依循序漸進原則仍建議依時間逐步晉級。`;
+  }else if(a.idx < monthCeilingIdx){
+    reason = `測評結果為 ${a.passCount}/3 項達標，尚未達到晉級標準，建議先鞏固目前等級再往上。`;
+  }else{
+    reason = `測評結果（${a.passCount}/3 項達標）與目前階段相符。`;
+  }
+  return {idx, hasAssessment:true, reason};
+}
+function nextAssessmentHint(){
+  const info = computeProgramInfo();
+  if(!info || info.future) return appData.assessments.length? '完成一次前測後即可開始追蹤' : '建議先完成前測，建立基準值';
+  const milestones=[3,6,9,12];
+  const next = milestones.find(m=>m>info.month);
+  return next ? `建議第 ${next} 個月再測一次` : '已進入計畫尾聲，建議完成 12 個月後測';
+}
+
+/* Week navigation: the weekly template (WEEK[level]) is fixed by weekday,
+   but logging is keyed to real calendar dates so people can look at last
+   week or next week without losing history. */
+function getWeekRange(d){
+  const day = (d.getDay()+6)%7; // Monday=0
+  const monday = new Date(d); monday.setDate(d.getDate()-day); monday.setHours(0,0,0,0);
+  const sunday = new Date(monday); sunday.setDate(monday.getDate()+6); sunday.setHours(23,59,59,999);
+  return [monday, sunday];
+}
+function getDisplayedWeekDates(){
+  const [monday] = getWeekRange(new Date());
+  const base = new Date(monday); base.setDate(base.getDate() + weekOffset*7);
+  const dates=[];
+  for(let i=0;i<7;i++){ const d=new Date(base); d.setDate(base.getDate()+i); dates.push(d); }
+  return dates; // Monday..Sunday, matches WEEK[level] day order
+}
+function changeWeek(delta){
+  weekOffset += delta;
+  renderWeek();
+}
+function countThisWeekSessions(){
+  const [start,end] = getWeekRange(new Date());
+  let count=0;
+  let d = new Date(start);
+  while(d<=end){
+    if(appData.sessionRecords[toLocalDateKey(d)]) count++;
+    d.setDate(d.getDate()+1);
+  }
+  return count;
+}
+function recentPainCount(){
+  const cutoff = new Date(); cutoff.setDate(cutoff.getDate()-30);
+  let count=0;
+  Object.keys(appData.sessionRecords).forEach(k=>{
+    const rec = appData.sessionRecords[k];
+    const d = new Date(k+'T00:00:00');
+    if(d>=cutoff && (rec.pain==='明顯' || rec.pain==='需要停止')) count++;
+  });
+  return count;
+}
+
+/* ---------------- RENDER: HOME ---------------- */
+function renderHome(){
+  const today = new Date();
+  const wd = WEEKDAY_MAP[today.getDay()];
+  document.getElementById('todayDateLabel').textContent = today.toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('todayWeekdayLabel').textContent = '星期'+wd;
+
+  const weekPlan = WEEK[appData.currentLevel];
+  const todayPlan = weekPlan.find(d=>d.day===wd);
+  document.getElementById('todayTitle').textContent = todayPlan.title;
+  document.getElementById('todayMeta').textContent = todayPlan.sub;
+
+  // program tracker card (date/week/phase only)
+  const tracker = document.getElementById('trackerCard');
+  const info = computeProgramInfo();
+  if(!appData.startDate){
+    tracker.innerHTML = `
+      <h2>計畫進度追蹤</h2>
+      <p style="color:var(--text-muted)">設定開始日期，就能自動算出目前是第幾週、屬於哪個階段。</p>
+      <div class="set-date-row">
+        <input type="date" id="startDateInput">
+        <button class="btn btn-ghost" style="width:auto;" onclick="setStartDate()">開始追蹤</button>
+      </div>
+    `;
+  }else if(info && info.future){
+    tracker.innerHTML = `<h2>計畫進度追蹤</h2><p>開始日期尚未到，先熟悉一下操作吧！</p>
+      <button class="btn btn-outline" onclick="clearStartDate()">重新設定日期</button>`;
+  }else if(info){
+    const phase = PHASES[info.phaseIdx];
+    tracker.innerHTML = `
+      <div class="tracker-row"><h2 style="margin:0;">計畫進度追蹤</h2><span class="pill">${phase.name}</span></div>
+      <div class="tracker-row"><span>第 <span class="big">${info.week}</span> 週（共 52 週）</span><span>約第 ${info.month} 個月</span></div>
+      <p style="margin:4px 0 0;">${phase.goal}</p>
+      <button class="btn btn-outline" style="margin-top:10px;" onclick="clearStartDate()">重新設定開始日期</button>
+    `;
+  }
+
+  // data-driven level suggestion (month ceiling + latest assessment)
+  const suggestCard = document.getElementById('suggestCard');
+  const sug = getSuggestedLevel();
+  const sugLevel = LEVELS[sug.idx];
+  const curLevel = LEVELS.find(l=>l.id===appData.currentLevel);
+  let applyBtn = '';
+  if(sugLevel.id !== appData.currentLevel){
+    applyBtn = `<button class="btn btn-ghost" style="width:auto; margin-top:10px;" onclick="applySuggestedLevel('${sugLevel.id}')">套用建議程度</button>`;
+  }
+  suggestCard.innerHTML = `
+    <h2>建議等級</h2>
+    <div class="suggest-row">
+      <div>
+        <div class="suggest-level">${sugLevel.label}</div>
+        <div class="source-note">目前設定：${curLevel.label}　・　下次測評：${nextAssessmentHint()}</div>
+      </div>
+    </div>
+    <div class="tip-box" style="margin-top:10px;"><b>依據：</b>${sug.reason}</div>
+    ${applyBtn}
+    <p class="source-note" style="margin-top:10px;">※ 測評分級門檻為產品原型，正式上線前應由合格運動／醫療專業人員依社區族群校準。</p>
+  `;
+
+  // weekly completion bar
+  const target = LEVELS.find(l=>l.id===appData.currentLevel).target;
+  const done = countThisWeekSessions();
+  const pct = Math.min(100, Math.round(done/target*100));
+  document.getElementById('weekBarFill').style.width = pct+'%';
+  document.getElementById('weekBarLabel').textContent = `本週已完成 ${done} / 目標 ${target} 次訓練`;
+
+  // level tabs on home
+  const tabWrap = document.getElementById('homeLevelTabs');
+  tabWrap.innerHTML='';
+  LEVELS.forEach(l=>{
+    const b=document.createElement('button');
+    b.className='level-tab'+(appData.currentLevel===l.id?' active':'');
+    b.textContent=l.label;
+    b.onclick=()=>{ appData.currentLevel=l.id; saveData(); renderAll(); };
+    tabWrap.appendChild(b);
+  });
+  document.getElementById('levelHint').textContent = LEVELS.find(l=>l.id===appData.currentLevel).desc;
+}
+
+/* ---------------- RENDER: PLAN ---------------- */
+function renderPlan(){
+  const wrap=document.getElementById('phaseList');
+  wrap.innerHTML='';
+  PHASES.forEach(p=>{
+    const div=document.createElement('div');
+    div.className='card phase-card';
+    div.innerHTML=`
+      <div class="num">${p.num}</div>
+      <h2>${p.name}<span class="pill" style="margin-left:8px;">${p.level}</span></h2>
+      <div class="months">${p.months} ・ ${p.freq}</div>
+      <p class="phase-goal">${p.goal}</p>
+      <ul class="phase-list">${p.focus.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <div class="tip-box" style="margin-top:10px;"><b>階段里程碑：</b>${p.milestone}</div>
+    `;
+    wrap.appendChild(div);
+  });
+}
+
+/* ---------------- RENDER: WEEK ---------------- */
+function levelTabsInto(elId, onPick){
+  const wrap=document.getElementById(elId);
+  wrap.innerHTML='';
+  LEVELS.forEach(l=>{
+    const b=document.createElement('button');
+    b.className='level-tab'+(appData.currentLevel===l.id?' active':'');
+    b.textContent=l.label;
+    b.onclick=()=>{ appData.currentLevel=l.id; saveData(); onPick(); };
+    wrap.appendChild(b);
+  });
+}
+function renderWeek(){
+  levelTabsInto('weekLevelTabs', renderAll);
+  document.getElementById('weekLevelDesc').textContent = LEVELS.find(l=>l.id===appData.currentLevel).desc;
+
+  const dates = getDisplayedWeekDates();
+  const tKey = todayKey();
+  const today0 = new Date(); today0.setHours(0,0,0,0);
+
+  // week nav label
+  const navLabel = weekOffset===0 ? '本週'
+    : (weekOffset<0 ? `${Math.abs(weekOffset)} 週前` : `${weekOffset} 週後`);
+  const rangeTxt = `${dates[0].getMonth()+1}/${dates[0].getDate()} – ${dates[6].getMonth()+1}/${dates[6].getDate()}`;
+  document.getElementById('weekNavLabel').textContent = `${navLabel}（${rangeTxt}）`;
+
+  const wrap=document.getElementById('weekDays');
+  wrap.innerHTML='';
+  const painDays=[];
+
+  WEEK[appData.currentLevel].forEach((d, i)=>{
+    const dDate = dates[i];
+    const dateKey = toLocalDateKey(dDate);
+    const isToday = dateKey===tKey;
+    const isFuture = dDate.getTime() > today0.getTime();
+    const isRest = d.type==='rest';
+    const record = appData.sessionRecords[dateKey];
+    const done = !!record;
+    if(record && (record.pain==='明顯' || record.pain==='需要停止')) painDays.push(dateKey);
+
+    const div=document.createElement('div');
+    div.className='day-card'+(isToday?' today':'')+(isRest?' rest':'');
+    const icon = d.type==='cardio'?'❤️': d.type==='strength'?'💪': d.type==='active'?'🚶': '😴';
+
+    let logHtml='';
+    if(!isRest){
+      if(isFuture){
+        logHtml = `<p class="sub" style="margin-top:8px;">尚未到這一天</p>`;
+      }else{
+        const rpeVal = record ? record.rpe : 5;
+        const painVal = record ? record.pain : '無';
+        const summaryTxt = done
+          ? `已記錄 ✓　RPE ${record.rpe||'—'}　不適：${record.pain||'無'}`
+          : '尚未記錄，點此記錄今天';
+        logHtml = `
+          <details class="log-details${done?' done':''}">
+            <summary>${summaryTxt}</summary>
+            <div class="log-body">
+              <label for="rpe-${dateKey}">主觀用力程度 RPE（0–10）</label>
+              <input type="range" min="0" max="10" value="${rpeVal}" id="rpe-${dateKey}"
+                oninput="document.getElementById('rpeOut-${dateKey}').textContent=this.value">
+              <div class="hint">0 = 完全不費力，10 = 非常吃力　目前：<b id="rpeOut-${dateKey}">${rpeVal}</b></div>
+              <label for="pain-${dateKey}" style="margin-top:10px;">疼痛／不適</label>
+              <select id="pain-${dateKey}">
+                ${['無','輕微','明顯','需要停止'].map(p=>`<option ${p===painVal?'selected':''}>${p}</option>`).join('')}
+              </select>
+              <div class="btn-row" style="margin-top:12px;">
+                <button class="btn btn-primary" onclick="saveSessionRecord('${dateKey}','${d.day}')">${done?'更新紀錄':'儲存這天的紀錄'}</button>
+                ${done?`<button class="btn btn-outline" onclick="deleteSessionRecord('${dateKey}')">取消紀錄</button>`:''}
+              </div>
+            </div>
+          </details>`;
+      }
+    }
+
+    div.innerHTML=`
+      <div class="day-badge">${icon}<br>星期${d.day}<br><span style="font-weight:400; font-size:11px;">${dDate.getMonth()+1}/${dDate.getDate()}</span></div>
+      <div class="day-content">
+        <h3>${d.title}</h3>
+        <div class="sub">${d.sub}</div>
+        ${logHtml}
+      </div>
+    `;
+    wrap.appendChild(div);
+  });
+
+  const alertBox = document.getElementById('painAlert');
+  if(painDays.length>0){
+    alertBox.style.display='block';
+    alertBox.innerHTML = `<h3>⚠️ 這週有回報明顯不適</h3><p>${painDays.join('、')} 記錄到「明顯」或「需要停止」的不適。請降低強度或暫停該項目，並考慮諮詢醫療／運動專業人員，詳見「安全守則」。</p>`;
+  }else{
+    alertBox.style.display='none';
+  }
+}
+function saveSessionRecord(dateKey, dayLabel){
+  const rpe = document.getElementById('rpe-'+dateKey).value;
+  const pain = document.getElementById('pain-'+dateKey).value;
+  appData.sessionRecords[dateKey] = { level: appData.currentLevel, day: dayLabel, rpe, pain, ts: Date.now() };
+  saveData();
+  renderWeek();
+  renderHome();
+}
+function deleteSessionRecord(dateKey){
+  delete appData.sessionRecords[dateKey];
+  saveData();
+  renderWeek();
+  renderHome();
+}
+
+/* ---------------- RENDER: GUIDE ---------------- */
+function videoCardsHtml(videos){
+  if(!videos || videos.length===0) return '';
+  const cards = videos.map(v=>`
+    <a class="video-card" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.title}" loading="lazy">
+        <span class="play">▶</span>
+      </div>
+      <div class="video-info">
+        <div class="vt">${v.title}</div>
+        <div class="vc">${v.channel} · YouTube</div>
+      </div>
+    </a>
+  `).join('');
+  return `
+    <div class="video-section">
+      <h4>📺 教學影片</h4>
+      <div class="video-list">${cards}</div>
+    </div>
+  `;
+}
+function renderGuide(){
+  levelTabsInto('guideLevelTabs', renderAll);
+  const wrap=document.getElementById('equipList');
+  wrap.innerHTML='';
+  EQUIPMENT.forEach(eq=>{
+    const div=document.createElement('div');
+    div.className='card equip-card';
+    div.innerHTML=`
+      <div class="equip-head">
+        <div class="icon">${eq.icon}</div>
+        <div>
+          <h3 style="margin-bottom:0;">${eq.name}</h3>
+          <div class="cat">${eq.cat}</div>
+        </div>
+      </div>
+      <p>${eq.desc}</p>
+      <div class="level-block"><span>本階段建議</span><b>${eq.levels[appData.currentLevel]}</b></div>
+      <div class="tip-box"><b>銀髮族重點：</b>${eq.tip}</div>
+      <div class="safety-box"><b>安全提醒：</b>${eq.safety}</div>
+      ${videoCardsHtml(eq.videos)}
+    `;
+    wrap.appendChild(div);
+  });
+}
+
+/* ---------------- RENDER: ASSESSMENT ---------------- */
+function renderConditionChips(){
+  const wrap=document.getElementById('conditionChips');
+  wrap.innerHTML='';
+  CONDITIONS.forEach(c=>{
+    const label=document.createElement('label');
+    label.className='check-chip';
+    label.innerHTML=`<input type="checkbox" value="${c}"> ${c}`;
+    wrap.appendChild(label);
+  });
+}
+function saveAssessment(){
+  const conds=[...document.querySelectorAll('#conditionChips input:checked')].map(i=>i.value);
+  const record = {
+    id: Date.now(),
+    type: document.getElementById('a-type').value,
+    date: document.getElementById('a-date').value || todayKey(),
+    age: document.getElementById('a-age').value,
+    conditions: conds,
+    approved: document.getElementById('a-approved').checked,
+    notes: document.getElementById('a-notes').value,
+    tests:{
+      stand: document.getElementById('t-stand').value,
+      tug: document.getElementById('t-tug').value,
+      balance: document.getElementById('t-balance').value,
+      reach: document.getElementById('t-reach').value,
+      grip: document.getElementById('t-grip').value
+    },
+    wellbeing: document.getElementById('t-well').value
+  };
+  if(!record.date){ alert('請選擇測評日期'); return; }
+  appData.assessments.push(record);
+  appData.assessments.sort((a,b)=> new Date(a.date)-new Date(b.date));
+  saveData();
+  renderAll();
+  // clear numeric fields for convenience
+  ['t-stand','t-tug','t-balance','t-reach','t-grip','a-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('t-well').value = 5;
+  document.getElementById('wellOutVal').textContent = '5';
+}
+function typeLabel(t){ return t==='baseline'?'前測':t==='final'?'後測':'期中測評'; }
+function renderAssessment(){
+  const histWrap=document.getElementById('assessHistory');
+  if(appData.assessments.length===0){
+    histWrap.innerHTML='<p class="empty-note">尚未有測評紀錄</p>';
+  }else{
+    histWrap.innerHTML = appData.assessments.slice().reverse().map(r=>`
+      <div class="history-item">
+        <div class="d">${r.date} · <span class="pill">${typeLabel(r.type)}</span></div>
+        <div style="font-size:15px; color:var(--text-muted); margin-top:4px;">
+          坐站 ${r.tests.stand||'—'} 次 ・ TUG ${r.tests.tug||'—'} 秒 ・ 單腳站 ${r.tests.balance||'—'} 秒 ・ 體前彎 ${r.tests.reach||'—'} 公分${r.tests.grip?' ・ 握力 '+r.tests.grip+' kg':''}${r.wellbeing?' ・ 精神狀態 '+r.wellbeing+'/10':''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const compareCard=document.getElementById('compareCard');
+  if(appData.assessments.length>=2){
+    compareCard.style.display='block';
+    const first=appData.assessments[0];
+    const latest=appData.assessments[appData.assessments.length-1];
+    const rows=[
+      {label:'30秒坐站（次）', a:first.tests.stand, b:latest.tests.stand, higherBetter:true},
+      {label:'起立走測試（秒）', a:first.tests.tug, b:latest.tests.tug, higherBetter:false},
+      {label:'單腳站立（秒）', a:first.tests.balance, b:latest.tests.balance, higherBetter:true},
+      {label:'坐姿體前彎（公分）', a:first.tests.reach, b:latest.tests.reach, higherBetter:true},
+      {label:'握力（公斤）', a:first.tests.grip, b:latest.tests.grip, higherBetter:true}
+    ];
+    let html = `<tr><th>項目</th><th>${first.date}</th><th>${latest.date}</th><th>變化</th></tr>`;
+    rows.forEach(r=>{
+      const av=parseFloat(r.a), bv=parseFloat(r.b);
+      let deltaHtml='—';
+      if(!isNaN(av) && !isNaN(bv)){
+        const diff = (bv-av);
+        const improved = r.higherBetter ? diff>0 : diff<0;
+        const arrow = diff===0 ? '持平' : (improved ? '↑ 進步' : '↓ 需留意');
+        deltaHtml = `<span class="${improved?'delta-up':'delta-down'}">${arrow} ${Math.abs(diff).toFixed(1)}</span>`;
+      }
+      html += `<tr><td style="text-align:left;">${r.label}</td><td>${r.a||'—'}</td><td>${r.b||'—'}</td><td>${deltaHtml}</td></tr>`;
+    });
+    document.getElementById('compareTable').innerHTML=html;
+  }else{
+    compareCard.style.display='none';
+  }
+
+  const painCard = document.getElementById('painStatsCard');
+  const painCount = recentPainCount();
+  if(painCount>0){
+    painCard.style.display='block';
+    painCard.innerHTML = `<h3>⚠️ 近 30 天不適回報</h3><p>本週課表中有 <b>${painCount}</b> 次記錄到「明顯」或「需要停止」的不適。建議降低相關動作的強度，並考慮諮詢醫療／運動專業人員後再調整課表。</p>`;
+  }else{
+    painCard.style.display='none';
+  }
+}
+
+/* ---------------- INIT ---------------- */
+function renderAll(){
+  renderHome();
+  renderPlan();
+  renderWeek();
+  renderGuide();
+  renderAssessment();
+}
+
+(async function init(){
+  renderConditionChips();
+  document.getElementById('a-date').valueAsDate = new Date();
+  await loadData();
+  renderAll();
+})();
+</script>
+</body>
+</html>
