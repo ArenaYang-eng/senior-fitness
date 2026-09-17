@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
 <title>銀髮族健身計畫</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2F4C39">
+<meta name="description" content="社區健身房銀髮族專屬的12個月訓練計畫、每週課表、器材教學與體能測評紀錄。">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="樂齡健身">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <style>
   :root{
     --bg:#FBF8F1;
@@ -154,6 +163,19 @@
   .storage-warning{
     display:none; background:var(--caution); color:#fff; text-align:center;
     font-size:14px; font-weight:700; padding:8px 14px;
+  }
+
+  .install-banner{
+    display:none; align-items:center; gap:12px;
+    background:var(--primary-tint); border:1px solid var(--border);
+    border-radius:var(--radius-md); padding:14px; margin-bottom:16px;
+  }
+  .install-banner.show{display:flex;}
+  .install-banner .txt{flex:1; font-size:15px; color:var(--primary-dark); font-weight:700;}
+  .install-banner .txt span{display:block; font-weight:400; color:var(--text-muted); font-size:14px; margin-top:2px;}
+  .install-banner button{
+    background:var(--accent); color:var(--primary-dark); border:none; border-radius:12px;
+    padding:12px 18px; font-size:16px; font-weight:700; white-space:nowrap; min-height:48px;
   }
 
   .suggest-card{margin-bottom:16px;}
@@ -323,6 +345,12 @@
 
   <!-- HOME -->
   <section class="screen active" id="screen-home">
+    <div class="install-banner" id="installBanner">
+      <div class="txt">安裝到手機桌面
+        <span>之後點桌面圖示就能直接打開，不用再找連結</span>
+      </div>
+      <button onclick="doInstall()">安裝</button>
+    </div>
     <div class="today-card">
       <div class="label">今天是<span id="todayWeekdayLabel"></span></div>
       <h2 id="todayTitle">今天的運動</h2>
@@ -1253,6 +1281,46 @@ function renderAssessment(){
   }else{
     painCard.style.display='none';
   }
+}
+
+/* ---------------- PWA: 安裝到桌面 ---------------- */
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  // Chrome 判定可安裝時會觸發，先攔下預設提示，改用自己的橫幅
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBanner').classList.add('show');
+});
+
+async function doInstall(){
+  if(!deferredPrompt){
+    alert('若沒有出現安裝選項，請點瀏覽器右上角的「⋮」選單，選擇「加到主畫面」或「安裝應用程式」。');
+    return;
+  }
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  document.getElementById('installBanner').classList.remove('show');
+}
+
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  document.getElementById('installBanner').classList.remove('show');
+});
+
+// 已經是從桌面圖示開啟的話，就不用再顯示安裝提示
+if(window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone){
+  const b = document.getElementById('installBanner');
+  if(b) b.classList.remove('show');
+}
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {
+      /* 以本機檔案方式開啟時會註冊失敗，屬正常，不影響使用 */
+    });
+  });
 }
 
 /* ---------------- INIT ---------------- */
