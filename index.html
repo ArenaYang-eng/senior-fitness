@@ -270,6 +270,13 @@
     display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
   .video-info .vc{font-size:13px; color:var(--text-muted); margin-top:3px;}
   .video-note{font-size:13px; color:var(--text-muted); margin-top:8px;}
+  .facility-badge{
+    display:inline-block; font-size:13px; font-weight:700; padding:4px 12px; border-radius:999px;
+    background:var(--caution-tint); color:var(--caution); margin-bottom:8px;
+  }
+  .section-divider{margin:26px 4px 10px; padding-top:10px; border-top:2px solid var(--border);}
+  .section-divider h2{margin-bottom:4px;}
+  .section-divider p{color:var(--text-muted); font-size:15px; margin-top:0;}
   .equip-head{display:flex; align-items:center; gap:12px; margin-bottom:6px;}
   .equip-head .icon{font-size:32px;}
   .equip-head .cat{font-size:14px; color:var(--text-muted);}
@@ -388,8 +395,33 @@
       <ul style="padding-left:20px; margin:8px 0 0;">
         <li>開始前請先完成「體能測評」，並確認醫師同意運動。</li>
         <li>運動中若感到胸悶、頭暈或不適，請立即停止並休息，詳見「安全守則」。</li>
-        <li>每次運動前後別忘了 5 分鐘暖身與收操伸展。</li>
+        <li>每次運動前後別忘了 5 分鐘暖身與收操伸展，可以先看下面的教學影片練習。</li>
       </ul>
+      <div class="video-section">
+        <h4>📺 暖身與收操教學</h4>
+        <div class="video-list">
+          <a class="video-card" href="https://www.youtube.com/watch?v=xXxoGmgQN0M" target="_blank" rel="noopener">
+            <div class="video-thumb">
+              <img src="https://img.youtube.com/vi/xXxoGmgQN0M/mqdefault.jpg" alt="暖身與收操：五個暖身動作及自我放鬆方法" loading="lazy">
+              <span class="play">▶</span>
+            </div>
+            <div class="video-info">
+              <div class="vt">如何暖身與收操？五個暖身動作及自我放鬆方法</div>
+              <div class="vc">北木健身 · YouTube</div>
+            </div>
+          </a>
+          <a class="video-card" href="https://www.youtube.com/watch?v=Wdn9N1huumE" target="_blank" rel="noopener">
+            <div class="video-thumb">
+              <img src="https://img.youtube.com/vi/Wdn9N1huumE/mqdefault.jpg" alt="4分鐘長者伸展運動" loading="lazy">
+              <span class="play">▶</span>
+            </div>
+            <div class="video-info">
+              <div class="vt">4分鐘長者伸展運動（改善肌肉痠痛、增加柔軟度）</div>
+              <div class="vc">YouTube</div>
+            </div>
+          </a>
+        </div>
+      </div>
       <button class="btn btn-outline" style="margin-top:12px;" onclick="goTo('safety')">查看完整安全守則</button>
     </div>
   </section>
@@ -553,6 +585,12 @@
       <p><b>飛輪車：</b>坐墊較窄、姿勢前傾，門檻較高。建議體能極佳、無心血管疑慮的長輩，待高階階段再嘗試。</p>
       <p><b>階梯機：</b>對膝關節壓力較大，需良好平衡感。建議關節健康、已有運動習慣者，全程緊握扶手、極慢速進行。</p>
     </div>
+
+    <div class="section-divider">
+      <h2>泳池與烤箱（社區其他設施）</h2>
+      <p>這兩項不是訓練器材，不計入每週訓練次數或分級進度，屬於可自由選用的輔助設施。使用前請務必看過安全提醒。</p>
+    </div>
+    <div id="facilityList"></div>
   </section>
 
   <!-- SAFETY -->
@@ -734,6 +772,38 @@ const EQUIPMENT = [
       {title:'年長者也能開始的啞鈴訓練｜從挑選重量到入門動作一次教你', channel:'Kopi', id:'ldTnHnS6EDQ'},
       {title:'長者運動：簡易新手啞鈴訓練', channel:'GymBeginner', id:'HHv2OAeJMWs'}
     ]
+  }
+];
+
+/* 社區其他設施：游泳池、烤箱。
+   這兩項不是「訓練器材」，刻意不放進 EQUIPMENT／不計入分級訓練量：
+   - 游泳池：可作為關節友善的心肺替代選項，但浮力會減少負重刺激，
+     不能取代阻力訓練對骨密度的效果，所以歸類為「輔助選項」。
+   - 烤箱：定位為運動後的放鬆設施，風險層級（熱暴露對心血管的負擔）
+     明顯高於一般有氧器材，需要更嚴格的安全守則，且不建議劇烈運動後立即使用。 */
+const FACILITIES = [
+  {
+    id:'pool', icon:'🏊', name:'游泳池（社區其他設施）', cat:'水中有氧 · 關節極友善 · 輔助選項',
+    badge:'非分級訓練項目',
+    desc:'25公尺、3泳道，深度1.2公尺，常溫水。浮力大幅減輕關節負擔，同時水的阻力能強化全身肌力，對關節退化、體重較重、平衡較弱但仍想維持心肺功能的長輩很合適。每年11月1日至隔年5月1日休池（低溫季節）。',
+    tip:'浮力會抵銷體重，對骨密度的刺激遠不如陸上負重訓練，請當作跑步機快走、雙滑輪機的「補充」，不要用來取代兩者。',
+    safety:'常溫水偏涼，高血壓或心血管疾病者入水前應先經醫師評估；務必有救生員或同伴陪同，不獨自下水；走緩坡或階梯進出池邊，避免使用不穩的梯子；1.2公尺深度對身材嬌小的長輩接近胸口，建議先在淺水區練習。',
+    levels:{
+      beginner:'扶邊或淺水區行走 5–10 分鐘，先熟悉水中平衡感',
+      intermediate:'水中健走或慢速蛙式 10–15 分鐘',
+      advanced:'連續游泳 20–30 分鐘，或加入水中有氧動作'
+    },
+    videos:[
+      {title:'水中有氧體適能：低衝擊、適合樂齡的水中運動', channel:'臺中市南屯國民運動中心', id:'miVkJPjUk_8'}
+    ]
+  },
+  {
+    id:'sauna', icon:'🔥', name:'烤箱（社區其他設施）', cat:'溫熱放鬆 · 非運動項目',
+    badge:'運動後選用．風險較高，請詳閱安全守則',
+    desc:'位於社區沐浴區，溫度最高 65°C，全年開放。屬於運動後的肌肉放鬆設施，不是訓練項目，不計入每週訓練次數。',
+    tip:'熱暴露會讓血管擴張、血壓下降、心跳加快。運動已經讓心血管負荷升高，不建議運動後「立刻」進烤箱，建議先休息 10–15 分鐘、心跳恢復平穩後再使用，且單次不超過 8–10 分鐘。',
+    safety:'高血壓未控制、近期心臟病發作或中風、心律不整者，使用前務必先諮詢醫師；務必先補水，結束後也要補水；絕對不要單獨使用，務必讓人知道你在裡面；飲酒後、發燒、身體不適時不要使用；有開放性傷口或特定皮膚病者不建議使用。',
+    levels:null
   }
 ];
 
@@ -1185,6 +1255,34 @@ function renderGuide(){
       ${videoCardsHtml(eq.videos)}
     `;
     wrap.appendChild(div);
+  });
+
+  const fWrap = document.getElementById('facilityList');
+  fWrap.innerHTML='';
+  FACILITIES.forEach(f=>{
+    const div=document.createElement('div');
+    div.className='card equip-card';
+    const levelBlock = f.levels
+      ? `<div class="level-block"><span>參考做法</span><b>${f.levels[appData.currentLevel]}</b></div>`
+      : '';
+    const safetyBlockClass = f.id==='sauna' ? 'danger-box' : 'safety-box';
+    const safetyLabel = f.id==='sauna' ? '⛔ 使用前務必詳閱' : '安全提醒';
+    div.innerHTML=`
+      <span class="facility-badge">${f.badge}</span>
+      <div class="equip-head">
+        <div class="icon">${f.icon}</div>
+        <div>
+          <h3 style="margin-bottom:0;">${f.name}</h3>
+          <div class="cat">${f.cat}</div>
+        </div>
+      </div>
+      <p>${f.desc}</p>
+      ${levelBlock}
+      <div class="tip-box"><b>銀髮族重點：</b>${f.tip}</div>
+      <div class="${safetyBlockClass}"><b>${safetyLabel}：</b>${f.safety}</div>
+      ${videoCardsHtml(f.videos)}
+    `;
+    fWrap.appendChild(div);
   });
 }
 
