@@ -565,11 +565,24 @@
     <p style="color:var(--text-muted)">點選您目前的程度，就能看到對應的時間與組數建議。每個器材下方也附上教學影片，第一次使用前可以先看過一遍。</p>
     <p class="video-note">📺 影片皆連結至 YouTube 公開影片（非本社區拍攝），點擊會另開新分頁播放。內容僅供參考，實際器材操作方式仍以現場教練或管理員說明為準。</p>
 
+    <div class="principle-card">
+      <h3 style="margin-bottom:2px;">阻力／坡度要設定第幾級？</h3>
+      <p style="margin:0;">跑步機、健身車、橢圓機、階梯機／飛輪車都可以調整阻力或坡度，但<b>同樣是「3級」，不同廠牌、不同機型的實際強度可能差很多</b>，沒有一個放諸四海皆準的數字。比較可靠的方法是：</p>
+      <div class="principle-chain">
+        <span class="step">① 一律從最低（1級）開始</span><span class="arrow">→</span>
+        <span class="step">② 用「還能輕鬆說話」判斷</span><span class="arrow">→</span>
+        <span class="step">③ 對照 RPE 自覺強度</span><span class="arrow">→</span>
+        <span class="step">④ 穩定 2 週再升 1 級</span>
+      </div>
+      <p style="margin-top:10px;"><b>RPE 對照（0–10 分，跟測評表的自覺強度是同一把尺）：</b>初階抓 3–4 分（輕鬆，唱歌都沒問題）；中階抓 5–6 分（有點喘，講長句子沒問題）；高階抓 6–7 分（略吃力，講話會斷句）。只要覺得喘到快講不出話，就代表阻力/坡度太高，先調降一級。</p>
+      <p style="margin-top:6px;">同一個阻力等級如果連續訓練約 2 週，RPE 都明顯低於目標值、覺得太輕鬆，才調高 1 級——不要一次跳兩級以上。</p>
+    </div>
+
     <div class="card">
       <h3>器材角色速覽</h3>
       <table class="roletable">
         <tr><th>器材</th><th>主要用途</th><th>銀髮定位</th></tr>
-        <tr><td>雙滑輪多功能訓練機</td><td>胸、背、肩、腿、核心阻力</td><td>肌力主力</td></tr>
+        <tr><td>雙滑輪多功能訓練機</td><td>站姿全身阻力（胸、背、肩、軀幹、腿）</td><td>肌力主力</td></tr>
         <tr><td>跑步機</td><td>快走、坡度行走、心肺</td><td>負重步行核心</td></tr>
         <tr><td>靠背式健身車</td><td>低衝擊心肺</td><td>腰背友善替代</td></tr>
         <tr><td>橢圓機</td><td>零衝擊全身有氧</td><td>關節友善替代</td></tr>
@@ -582,8 +595,8 @@
     <div id="equipList"></div>
     <div class="card tint-accent">
       <h3>⚠️ 進階選配器材</h3>
-      <p><b>飛輪車：</b>坐墊較窄、姿勢前傾，門檻較高。建議體能極佳、無心血管疑慮的長輩，待高階階段再嘗試。</p>
-      <p><b>階梯機：</b>對膝關節壓力較大，需良好平衡感。建議關節健康、已有運動習慣者，全程緊握扶手、極慢速進行。</p>
+      <p><b>飛輪車：</b>坐墊較窄、姿勢前傾，門檻較高。建議體能極佳、無心血管疑慮的長輩，待高階階段再嘗試。阻力一樣從最低開始，用上方「阻力等級原則」的 RPE 判斷法調整，不要一開始就挑戰高阻力。</p>
+      <p><b>階梯機：</b>對膝關節壓力較大，需良好平衡感。建議關節健康、已有運動習慣者，全程緊握扶手、極慢速進行。速度／阻力同樣從最低一級開始，穩定後再依 RPE 慢慢調高。</p>
     </div>
 
     <div class="section-divider">
@@ -724,7 +737,7 @@ const EQUIPMENT = [
     id:'treadmill', icon:'🏃', name:'跑步機（快走／爬坡）', cat:'有氧訓練',
     desc:'模擬平地行走、快走、慢跑或爬坡，全面提升心肺耐力，並強化下肢肌群。',
     tip:'極度推薦！雙腳踩踏的「負重」特性有助於維持骨質密度。建議從平地快走開始，熟練後可增加些微坡度以強化腿力。',
-    safety:'務必扣上安全夾；感覺不穩請先扶穩把手；配速以「還能正常說話」為原則，不要喘到說不出話。',
+    safety:'務必扣上安全夾；感覺不穩請先扶穩把手；配速以「還能正常說話」為原則，不要喘到說不出話；坡度／速度怎麼設定請見上方「阻力等級原則」。',
     levels:{beginner:'5–8 分鐘，平地，速度放慢', intermediate:'12–15 分鐘，坡度 1–2%', advanced:'18–22 分鐘，坡度 2–3% 間歇'},
     videos:[
       {title:'安全使用跑步機全攻略，跟著做就對啦！', channel:'康健雜誌', id:'_mez_sRxME0'},
@@ -735,7 +748,7 @@ const EQUIPMENT = [
     id:'elliptical', icon:'🔄', name:'橢圓機／滑步機', cat:'有氧訓練 · 關節友善',
     desc:'提供無衝擊的全身有氧運動，同時帶動上下半身（手臂推拉與雙腿踩踏）。',
     tip:'關節友善首選！對膝蓋或髖關節已退化、無法承受跑步機衝擊的長輩，是最安全的有氧選擇。',
-    safety:'雙手務必扶穩把手；起步先由慢速開始，感覺穩定後再逐漸加快。',
+    safety:'雙手務必扶穩把手；起步先由慢速開始，感覺穩定後再逐漸加快；阻力怎麼設定請見上方「阻力等級原則」。',
     levels:{beginner:'8–10 分鐘，慢速', intermediate:'15 分鐘，中速', advanced:'20 分鐘，可加入快慢間歇'},
     videos:[
       {title:'3招正確使用滑步機，燃脂安全又有效', channel:'康健雜誌', id:'eN6dFAnxVWM'}
@@ -745,21 +758,25 @@ const EQUIPMENT = [
     id:'recumbent', icon:'🚲', name:'靠背式健身車', cat:'有氧訓練 · 腰部友善',
     desc:'寬大座椅與背部支撐，完全卸除腰椎與上半身壓力的下肢訓練。',
     tip:'腰部力量不足或容易腰痠的長輩首選，乘坐極度舒適、身體重心低。',
-    safety:'調整好座椅前後距離，踩踏時膝蓋微彎即可，避免完全打直鎖死。',
+    safety:'調整好座椅前後距離，踩踏時膝蓋微彎即可，避免完全打直鎖死；阻力怎麼設定請見上方「阻力等級原則」。',
     levels:{beginner:'10 分鐘，輕阻力', intermediate:'15 分鐘，中阻力', advanced:'20 分鐘，可加入阻力間歇'},
     videos:[
       {title:'健身房設備教學｜斜臥式腳踏車', channel:'捷寶雲品', id:'8Gzs5X_W3zQ'}
     ]
   },
   {
-    id:'cable', icon:'🔗', name:'雙滑輪多功能訓練機', cat:'肌力訓練 · 安全首選',
-    desc:'透過繩索與滑輪的拉引，可進行全身各部位（胸、背、肩、腿、核心）的阻力訓練，軌跡受控、阻力平穩。',
-    tip:'安全第一選擇！相較於啞鈴，滑輪機的軌跡更受控。可訓練長輩最需要的背部（防駝背）、胸部（推力）與核心穩定。',
-    safety:'每次都從最輕的插梢重量開始測試；動作放慢、確實控制，避免用甩的方式借力。',
-    levels:{beginner:'3 個動作（坐姿划船／胸推／下拉），各 1–2 組 × 10–12 下', intermediate:'4 個動作，各 2–3 組 × 10–12 下，重量中等', advanced:'5–6 個動作全身循環，各 3 組 × 12–15 下'},
+    id:'cable', icon:'🔗', name:'雙滑輪多功能訓練機', cat:'肌力訓練 · 站姿操作 · 安全首選',
+    desc:'這是社區實際配備的 Technogym 站立式雙滑輪訓練機，全程站立操作，雙手各握一個把手。原廠動作分三類：上肢（肩推、划船、胸推）、軀幹（捲腹、背部伸展、旋轉）、下肢（髖外展／內收、深蹲）。軌跡受控、阻力平穩，是最適合長輩入門的阻力訓練機型。',
+    tip:'安全第一選擇！相較於啞鈴，滑輪機的軌跡更受控。上肢動作能訓練長輩最需要的背部（防駝背）與推力，軀幹動作能加強核心穩定，下肢動作能同時練到平衡感。機器上會結合弓步、深蹲等「POWER MODE」進階組合動作，銀髮族初期建議先不加，等平衡與肌力都穩定後再考慮。',
+    safety:'每次都從最輕的插梢重量開始測試；全程雙腳站穩、動作放慢，避免用甩的方式借力；「+ Squat／+ Lunge／POWER MODE」這類需要同時做下蹲或跨步的組合動作對平衡要求較高，尚未熟悉前不要嘗試，先把單純的推、拉、轉動作做穩。',
+    levels:{
+      beginner:'上肢 2 個動作（肩推 Shoulder press、低位划船 Low row），各 1–2 組 × 10–12 下，最輕重量，雙腳固定不動',
+      intermediate:'加入胸推 Chest press、高位划船 High row，以及軀幹的捲腹 Trunk curl、背部伸展 Back extension，共 4–5 個動作，各 2–3 組 × 10–12 下',
+      advanced:'全身循環：上肢＋軀幹旋轉 Trunk rotation＋下肢髖外展／內收 Hip abduction/adduction、深蹲 Squat，共 6–7 個動作，各 3 組 × 12–15 下；平衡穩定者可視情況嘗試搭配弓步的組合動作'
+    },
     videos:[
-      {title:'動作教學：滑輪坐姿划船（含高齡訓練建議）', channel:'前勁體能', id:'sJOEc7HP1FE'},
-      {title:'動作教學：滑輪下拉 Lat Pull Downs（入門）', channel:'前勁體能', id:'UEjioUYFARU'}
+      {title:'Learn How to Use our Technogym Kinesis Machine（英語發音，示範同款站立式機型）', channel:'Technogym', id:'T93pnlk8KR8'},
+      {title:'KINESIS Technogym Exercises – Beginners Intro（英語發音）', channel:'Technogym', id:'zf1RF5cPKTc'}
     ]
   },
   {
